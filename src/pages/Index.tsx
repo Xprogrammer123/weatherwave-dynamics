@@ -27,6 +27,12 @@ const Index = () => {
     }
   };
 
+  const handleSearch = (city: string) => {
+    if (city.trim()) {
+      fetchWeather(city);
+    }
+  };
+
   useEffect(() => {
     fetchWeather();
   }, []);
