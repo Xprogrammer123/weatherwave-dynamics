@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { WeatherData, WeatherCondition } from '../types/weather';
 
-const API_KEY = 'YOUR_API_KEY'; // Replace with actual API key
+const API_KEY = import.meta.env.VITE_OPENWEATHER_API_KEY;
 const BASE_URL = 'https://api.openweathermap.org/data/2.5';
 
 const mapCondition = (code: number): WeatherCondition => {
@@ -14,11 +14,19 @@ const mapCondition = (code: number): WeatherCondition => {
 };
 
 export const getWeather = async (city: string): Promise<WeatherData> => {
+  if (!API_KEY) {
+    throw new Error('OpenWeather API key is not configured');
+  }
+
   try {
     const response = await axios.get(
-      `${BASE_URL}/weather?q=${city}&appid=${API_KEY}&units=metric`
+      `${BASE_URL}/weather?q=${encodeURIComponent(city)}&appid=${API_KEY}&units=metric`
     );
     
+    if (!response.data) {
+      throw new Error('No data received from weather API');
+    }
+
     return {
       city: response.data.name,
       country: response.data.sys.country,
@@ -28,22 +36,40 @@ export const getWeather = async (city: string): Promise<WeatherData> => {
       windSpeed: Math.round(response.data.wind.speed),
       description: response.data.weather[0].description
     };
-  } catch (error) {
-    throw new Error('Failed to fetch weather data');
+  } catch (error: any) {
+    if (axios.isAxiosError(error)) {
+      if (error.response?.status === 404) {
+        throw new Error('City not found');
+      }
+      if (error.response?.status === 401) {
+        throw new Error('Invalid API key');
+      }
+    }
+    throw new Error('Failed to fetch weather data: ' + (error.message || 'Unknown error'));
   }
 };
 
 export const getForecast = async (city: string, dt: number): Promise<WeatherData> => {
+  if (!API_KEY) {
+    throw new Error('OpenWeather API key is not configured');
+  }
+
   try {
     const response = await axios.get(
-      `${BASE_URL}/forecast?q=${city}&appid=${API_KEY}&units=metric`
+      `${BASE_URL}/forecast?q=${encodeURIComponent(city)}&appid=${API_KEY}&units=metric`
     );
     
+    if (!response.data) {
+      throw new Error('No data received from forecast API');
+    }
+
     const forecast = response.data.list.find((item: any) => 
       Math.abs(item.dt - dt) < 10800
     );
     
-    if (!forecast) throw new Error('No forecast found for specified time');
+    if (!forecast) {
+      throw new Error('No forecast found for specified time');
+    }
     
     return {
       city: response.data.city.name,
@@ -54,7 +80,15 @@ export const getForecast = async (city: string, dt: number): Promise<WeatherData
       windSpeed: Math.round(forecast.wind.speed),
       description: forecast.weather[0].description
     };
-  } catch (error) {
-    throw new Error('Failed to fetch forecast data');
+  } catch (error: any) {
+    if (axios.isAxiosError(error)) {
+      if (error.response?.status === 404) {
+        throw new Error('City not found');
+      }
+      if (error.response?.status === 401) {
+        throw new Error('Invalid API key');
+      }
+    }
+    throw new Error('Failed to fetch forecast data: ' + (error.message || 'Unknown error'));
   }
 };
