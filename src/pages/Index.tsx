@@ -50,7 +50,7 @@ const Index = () => {
       case "stormy":
         return "https://images.unsplash.com/photo-1500375592092-40eb2168fd21";
       default:
-        return "https://images.unsplash.com/photo-1470813740244-df37b8c1edcb";
+        return "https://beach-weather.com/static/images/beach/small/paraiso_beach_cayo_largo_cuba.jpg";
     }
   };
 
