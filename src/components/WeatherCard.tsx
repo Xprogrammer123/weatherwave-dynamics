@@ -13,7 +13,7 @@ const WeatherCard = ({ weather }: WeatherCardProps) => {
       animate={{ y: 0, opacity: 1 }}
       exit={{ y: -20, opacity: 0 }}
       transition={{ duration: 0.3 }}
-      className={`rounded-3xl backdrop-blur-xl bg-white/50 shadow-lg border border-white/20
+      className={`rounded-3xl backdrop-blur-xl bg-white/5 shadow-lg border border-white/20
         ${weather.condition === 'sunny' ? 'bg-sunny/5' :
           weather.condition === 'rainy' ? 'bg-rainy/5' :
           weather.condition === 'cloudy' ? 'bg-cloudy/5' :
