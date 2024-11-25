@@ -21,7 +21,7 @@ const SearchBar = ({ onSearch }: SearchBarProps) => {
                      focus:ring-white/20 transition-all"
           onChange={(e) => onSearch(e.target.value)}
         />
-        <Search className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" />
+        <Search className="absolute left-3 top-2.5 h-5 w-5 text-gray-600" />
       </div>
     </motion.div>
   );
