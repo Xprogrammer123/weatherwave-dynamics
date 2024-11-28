@@ -21,7 +21,7 @@ const WeatherCard = ({ weather }: WeatherCardProps) => {
           weather.condition === 'snowy' ? 'bg-snowy/10' :
           'bg-stormy/10'}`}
     >
-      <div className="p-5 w-full h-full flex flex-col justify-center items-center">
+      <div className="px-5 py-8 w-full h-full flex flex-col justify-center items-center">
         <WeatherIcon condition={weather.condition} />
         
         <motion.div
