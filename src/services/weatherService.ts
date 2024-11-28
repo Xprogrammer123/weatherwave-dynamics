@@ -3,6 +3,10 @@ import { WeatherData, WeatherCondition } from '../types/weather';
 const API_KEY = import.meta.env.VITE_WEATHER_API_KEY;
 const BASE_URL = 'https://api.openweathermap.org/data/2.5';
 
+if (!API_KEY) {
+  throw new Error('Weather API key is not configured. Please check your .env file.');
+}
+
 export const getWeather = async (city: string): Promise<WeatherData> => {
   try {
     const response = await fetch(
