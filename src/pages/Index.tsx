@@ -55,7 +55,7 @@ const Index = () => {
 
   const getBackgroundImage = (condition?: WeatherCondition) => {
     // Updated to use cloud image as default
-    const cloudImage = "https://images.unsplash.com/photo-1482938289607-e9573fc25ebb";
+    const cloudImage = "https://static8.depositphotos.com/1003661/924/i/450/depositphotos_9247347-Beautiful-clouds.jpg";
     
     switch (condition) {
       case "sunny":
