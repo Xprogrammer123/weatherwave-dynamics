@@ -103,7 +103,7 @@ const Index = () => {
         onClick={() => navigate("/search")}
         className="fixed top-4 right-4 z-20 bg-transparent"
       >
-        <Plus className="h-10 w-10 text-white" />
+        <Plus className="h-6 w-6 text-white" />
       </Button>
 
       <div
