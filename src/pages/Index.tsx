@@ -101,9 +101,9 @@ const Index = () => {
     <div className="relative min-h-screen">
       <Button
         onClick={() => navigate("/search")}
-        className="fixed top-4 right-4 z-20 rounded-full w-10 h-10 bg-white/20 hover:bg-white/30 backdrop-blur-lg border border-white/10"
+        className="fixed top-4 right-4 z-20 "
       >
-        <Plus className="h-6 w-6 text-white" />
+        <Plus className="h-16 w-16 text-white" />
       </Button>
 
       <div
