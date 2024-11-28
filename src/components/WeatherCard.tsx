@@ -14,7 +14,8 @@ const WeatherCard = ({ weather }: WeatherCardProps) => {
       exit={{ y: -20, opacity: 0 }}
       transition={{ duration: 0.3 }}
       className={`flex justify-center items-center rounded-3xl backdrop-blur-md bg-white/10 shadow-lg border border-white/20 
-        w-[100vh] h-[50vh] -ml-60
+  w-full max-w-[90vw] md:max-w-[70vw] lg:w-[100vh] h-[50vh] -ml-0 md:-ml-30 lg:-ml-60`}
+
         ${weather.condition === 'sunny' ? 'bg-sunny/10' :
           weather.condition === 'rainy' ? 'bg-rainy/10' :
           weather.condition === 'cloudy' ? 'bg-cloudy/10' :
