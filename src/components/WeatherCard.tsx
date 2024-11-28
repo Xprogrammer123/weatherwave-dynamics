@@ -20,7 +20,7 @@ const WeatherCard = ({ weather }: WeatherCardProps) => {
           weather.condition === 'snowy' ? 'bg-snowy/10' :
           'bg-stormy/10'}`}
     >
-      <div className="p-8">
+      <div className="p-14">
         <div className="flex flex-col items-center space-y-4">
           <WeatherIcon condition={weather.condition} />
           
