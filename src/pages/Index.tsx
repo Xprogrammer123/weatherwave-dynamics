@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import WeatherCard from "../components/WeatherCard";
+import WeatherIcon from "../components/WeatherIcon";
 import { getWeather, getForecast } from "../services/weatherService";
 import type { WeatherData, WeatherCondition } from "../types/weather";
 import { useToast } from "../hooks/use-toast";
