@@ -13,12 +13,12 @@ const WeatherCard = ({ weather }: WeatherCardProps) => {
       animate={{ y: 0, opacity: 1 }}
       exit={{ y: -20, opacity: 0 }}
       transition={{ duration: 0.3 }}
-      className={`rounded-3xl backdrop-blur-xl bg-white/5 shadow-lg border border-white/20
-        ${weather.condition === 'sunny' ? 'bg-sunny/5' :
-          weather.condition === 'rainy' ? 'bg-rainy/5' :
-          weather.condition === 'cloudy' ? 'bg-cloudy/5' :
-          weather.condition === 'snowy' ? 'bg-snowy/5' :
-          'bg-stormy/5'}`}
+      className={`rounded-3xl backdrop-blur-md bg-white/10 shadow-lg border border-white/20
+        ${weather.condition === 'sunny' ? 'bg-sunny/10' :
+          weather.condition === 'rainy' ? 'bg-rainy/10' :
+          weather.condition === 'cloudy' ? 'bg-cloudy/10' :
+          weather.condition === 'snowy' ? 'bg-snowy/10' :
+          'bg-stormy/10'}`}
     >
       <div className="p-8">
         <div className="flex flex-col items-center space-y-4">

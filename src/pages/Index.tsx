@@ -1,21 +1,35 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import WeatherCard from "../components/WeatherCard";
-import SearchBar from "../components/SearchBar";
-import { getWeather } from "../services/weatherService";
+import { getWeather, getForecast } from "../services/weatherService";
 import type { WeatherData, WeatherCondition } from "../types/weather";
 import { useToast } from "../hooks/use-toast";
+import { useNavigate } from "react-router-dom";
 
 const Index = () => {
   const [weather, setWeather] = useState<WeatherData | null>(null);
+  const [hourlyForecast, setHourlyForecast] = useState<WeatherData[]>([]);
+  const [dailyForecast, setDailyForecast] = useState<WeatherData[]>([]);
   const [loading, setLoading] = useState(true);
   const { toast } = useToast();
+  const navigate = useNavigate();
 
   const fetchWeather = async (city: string = "London") => {
     try {
       setLoading(true);
       const data = await getWeather(city);
       setWeather(data);
+      
+      // Fetch forecasts
+      const hourly = await Promise.all(
+        Array.from({ length: 24 }, (_, i) => getForecast(city, i))
+      );
+      setHourlyForecast(hourly);
+      
+      const daily = await Promise.all(
+        Array.from({ length: 5 }, (_, i) => getForecast(city, i * 24))
+      );
+      setDailyForecast(daily);
     } catch (error) {
       toast({
         title: "Error",
@@ -27,14 +41,13 @@ const Index = () => {
     }
   };
 
-  const handleSearch = (city: string) => {
-    if (city.trim()) {
-      fetchWeather(city);
-    }
-  };
-
   useEffect(() => {
-    fetchWeather();
+    const selectedCity = localStorage.getItem("selectedCity");
+    if (!selectedCity) {
+      navigate("/search");
+    } else {
+      fetchWeather(selectedCity);
+    }
   }, []);
 
   const getBackgroundImage = (condition?: WeatherCondition) => {
@@ -54,9 +67,32 @@ const Index = () => {
     }
   };
 
+  const renderForecast = (forecast: WeatherData[], title: string) => (
+    <div className="w-full max-w-4xl mt-8">
+      <h2 className="text-2xl font-bold text-white mb-4">{title}</h2>
+      <div className="overflow-x-auto">
+        <div className="flex space-x-4 p-4">
+          {forecast.map((item, index) => (
+            <div
+              key={index}
+              className="flex-shrink-0 w-32 p-4 rounded-lg backdrop-blur-md bg-white/10 border border-white/20"
+            >
+              <WeatherIcon condition={item.condition} />
+              <p className="text-white font-bold mt-2">{item.temperature}°C</p>
+              <p className="text-white/70 text-sm">
+                {title === "24-Hour Forecast" 
+                  ? `${index}:00`
+                  : `Day ${index + 1}`}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+
   return (
     <div className="relative min-h-screen">
-      {/* Dynamic Background */}
       <div
         className="fixed inset-0 bg-cover bg-center transition-all duration-1000"
         style={{
@@ -64,18 +100,14 @@ const Index = () => {
         }}
       />
       
-      {/* Overlay */}
       <div className="fixed inset-0 bg-black/40" />
 
-      {/* Content */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        className="relative z-10 min-h-screen flex flex-col items-center justify-center p-6"
+        className="relative z-10 min-h-screen flex flex-col items-center justify-start p-6 pt-20"
       >
         <div className="w-full max-w-md space-y-8">
-          <SearchBar onSearch={handleSearch} />
-          
           <AnimatePresence mode="wait">
             {loading ? (
               <motion.div
@@ -99,6 +131,13 @@ const Index = () => {
             ) : null}
           </AnimatePresence>
         </div>
+
+        {!loading && weather && (
+          <>
+            {renderForecast(hourlyForecast, "24-Hour Forecast")}
+            {renderForecast(dailyForecast, "5-Day Forecast")}
+          </>
+        )}
       </motion.div>
     </div>
   );
