@@ -6,6 +6,8 @@ import { getWeather, getForecast } from "../services/weatherService";
 import type { WeatherData, WeatherCondition } from "../types/weather";
 import { useToast } from "../hooks/use-toast";
 import { useNavigate } from "react-router-dom";
+import { Plus } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 const Index = () => {
   const [weather, setWeather] = useState<WeatherData | null>(null);
@@ -52,19 +54,22 @@ const Index = () => {
   }, []);
 
   const getBackgroundImage = (condition?: WeatherCondition) => {
+    // Updated to use cloud image as default
+    const cloudImage = "https://images.unsplash.com/photo-1482938289607-e9573fc25ebb";
+    
     switch (condition) {
       case "sunny":
         return "https://images.unsplash.com/photo-1518495973542-4542c06a5843";
       case "rainy":
         return "https://images.unsplash.com/photo-1433086966358-54859d0ed716";
       case "cloudy":
-        return "https://images.unsplash.com/photo-1482938289607-e9573fc25ebb";
+        return cloudImage;
       case "snowy":
         return "https://images.unsplash.com/photo-1506744038136-46273834b3fb";
       case "stormy":
         return "https://images.unsplash.com/photo-1500375592092-40eb2168fd21";
       default:
-        return "https://beach-weather.com/static/images/beach/small/paraiso_beach_cayo_largo_cuba.jpg";
+        return cloudImage;
     }
   };
 
@@ -94,6 +99,13 @@ const Index = () => {
 
   return (
     <div className="relative min-h-screen">
+      <Button
+        onClick={() => navigate("/search")}
+        className="fixed top-4 right-4 z-20 rounded-full w-10 h-10 bg-white/20 hover:bg-white/30 backdrop-blur-lg border border-white/10"
+      >
+        <Plus className="h-6 w-6 text-white" />
+      </Button>
+
       <div
         className="fixed inset-0 bg-cover bg-center transition-all duration-1000"
         style={{
