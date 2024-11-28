@@ -25,21 +25,21 @@ const WeatherCard = ({ weather }: WeatherCardProps) => {
       <div className="px-5 py-8 w-full h-full flex flex-col justify-center items-center">
         <WeatherIcon condition={weather.condition} />
         
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          className="text-center text-white"
-        >
-          <h2 className="text-[7rem] font-bold mb-2">
-            {weather.temperature}°C
-          </h2>
-          <p className="text-3xl mb-4 capitalize">
-            {weather.description}
-          </p>
-          <p className="text-lg">
-            {weather.city}, {weather.country}
-          </p>
-        </motion.div>
+       <motion.div
+  initial={{ opacity: 0 }}
+  animate={{ opacity: 1 }}
+  className="text-center text-white"
+>
+  <h2 className="text-6xl md:text-7xl lg:text-[7rem] font-bold mb-2">
+    {weather.temperature}°C
+  </h2>
+  <p className="text-xl md:text-2xl lg:text-3xl mb-4 capitalize">
+    {weather.description}
+  </p>
+  <p className="text-sm md:text-base lg:text-lg">
+    {weather.city}, {weather.country}
+  </p>
+</motion.div>
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
