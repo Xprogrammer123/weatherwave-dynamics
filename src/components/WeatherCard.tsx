@@ -32,7 +32,7 @@ const WeatherCard = ({ weather }: WeatherCardProps) => {
           <h2 className="text-[7rem] font-bold mb-2">
             {weather.temperature}°C
           </h2>
-          <p className="text-xl mb-4 capitalize">
+          <p className="text-3xl mb-4 capitalize">
             {weather.description}
           </p>
           <p className="text-lg">
@@ -46,12 +46,12 @@ const WeatherCard = ({ weather }: WeatherCardProps) => {
           className="grid grid-cols-2 gap-8 mt-6 text-sm text-white"
         >
           <div>
-            <p className="text-white/70">Humidity</p>
-            <p className="font-semibold">{weather.humidity}%</p>
+            <p className="text-white/70 text-xl">Humidity</p>
+            <p className="font-semibold text-xl">{weather.humidity}%</p>
           </div>
           <div>
-            <p className="text-white/70">Wind Speed</p>
-            <p className="font-semibold">{weather.windSpeed} km/h</p>
+            <p className="text-white/70 text-xl">Wind Speed</p>
+            <p className="font-semibold text-xl">{weather.windSpeed} km/h</p>
           </div>
         </motion.div>
       </div>
