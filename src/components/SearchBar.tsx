@@ -43,7 +43,7 @@ const SearchBar = ({ onSearch }: SearchBarProps) => {
         <Search className="absolute left-3 top-2.5 h-5 w-5 text-gray-500" />
         <Button
           onClick={handleSearch}
-          className="absolute right-2 top-2 px-4 py-1 bg-white/20 hover:bg-white/30
+          className="absolute right-2 px-4 py-1 bg-white/20 hover:bg-white/30
                      text-white rounded-md backdrop-blur-lg border border-white/10"
         >
           Search
