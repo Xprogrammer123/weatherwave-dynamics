@@ -21,7 +21,7 @@ const WeatherCard = ({ weather }: WeatherCardProps) => {
           weather.condition === 'snowy' ? 'bg-snowy/10' :
           'bg-stormy/10'}`}
     >
-      <div className="p-14 w-full h-full flex flex-col justify-center items-center">
+      <div className="p-5 w-full h-full flex flex-col justify-center items-center">
         <WeatherIcon condition={weather.condition} />
         
         <motion.div
@@ -29,7 +29,7 @@ const WeatherCard = ({ weather }: WeatherCardProps) => {
           animate={{ opacity: 1 }}
           className="text-center text-white"
         >
-          <h2 className="text-4xl font-bold mb-2">
+          <h2 className="text-[7rem] font-bold mb-2">
             {weather.temperature}°C
           </h2>
           <p className="text-xl mb-4 capitalize">
