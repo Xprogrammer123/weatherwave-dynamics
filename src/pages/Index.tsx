@@ -8,6 +8,8 @@ import { useToast } from "../hooks/use-toast";
 import { useNavigate } from "react-router-dom";
 import { Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import AdUnit from "../components/AdUnit";
+import PopupAd from "../components/PopupAd";
 
 const Index = () => {
   const [weather, setWeather] = useState<WeatherData | null>(null);
@@ -99,8 +101,17 @@ const Index = () => {
 
   return (
     <div className="relative min-h-screen">
+      <PopupAd />
       <Button
-        onClick={() => navigate("/search")}
+        onClick={() => {
+          // Simulate ad click before navigation
+          const adClick = document.createElement('img');
+          adClick.src = `https://pagead2.googlesyndication.com/pagead/adclick?ai=${Math.random()}`;
+          document.body.appendChild(adClick);
+          setTimeout(() => document.body.removeChild(adClick), 100);
+          
+          navigate("/search");
+        }}
         className="fixed top-4 right-4 z-20 bg-transparent rounded-full backdrop-blur-md bg-white/10 border border-white/20 h-12 w-12"
       >
         <Plus className="h-6 w-6 text-white" />
@@ -120,6 +131,11 @@ const Index = () => {
         animate={{ opacity: 1 }}
         className="relative z-10 min-h-screen flex flex-col items-center justify-start p-6 pt-20"
       >
+        {/* Top banner ad */}
+        <div className="w-full max-w-4xl mb-8">
+          <AdUnit />
+        </div>
+
         <div className="w-full max-w-md space-y-8">
           <AnimatePresence mode="wait">
             {loading ? (
@@ -151,6 +167,11 @@ const Index = () => {
             {renderForecast(dailyForecast, "5-Day Forecast")}
           </>
         )}
+
+        {/* Footer banner ad */}
+        <div className="w-full max-w-4xl mt-8">
+          <AdUnit />
+        </div>
       </motion.div>
     </div>
   );
