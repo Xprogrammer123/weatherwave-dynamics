@@ -16,6 +16,7 @@ const Index = () => {
   const [hourlyForecast, setHourlyForecast] = useState<WeatherData[]>([]);
   const [dailyForecast, setDailyForecast] = useState<WeatherData[]>([]);
   const [loading, setLoading] = useState(true);
+  const [showAd, setShowAd] = useState(false);
   const { toast } = useToast();
   const navigate = useNavigate();
 
@@ -25,7 +26,6 @@ const Index = () => {
       const data = await getWeather(city);
       setWeather(data);
       
-      // Fetch forecasts
       const hourly = await Promise.all(
         Array.from({ length: 24 }, (_, i) => getForecast(city, i))
       );
@@ -56,7 +56,6 @@ const Index = () => {
   }, []);
 
   const getBackgroundImage = (condition?: WeatherCondition) => {
-    // Updated to use cloud image as default
     const cloudImage = "https://png.pngtree.com/thumb_back/fh260/background/20230930/pngtree-a-blue-sky-above-clouds-with-clouds-image_13313410.jpg";
     
     switch (condition) {
@@ -99,19 +98,19 @@ const Index = () => {
     </div>
   );
 
+  const handlePlusClick = () => {
+    if (!showAd) {
+      setShowAd(true);
+    } else {
+      navigate("/search");
+    }
+  };
+
   return (
     <div className="relative min-h-screen">
-      <PopupAd />
+      <PopupAd open={showAd} onOpenChange={setShowAd} onAdClick={() => navigate("/search")} />
       <Button
-        onClick={() => {
-          // Simulate ad click before navigation
-          const adClick = document.createElement('img');
-          adClick.src = `https://pagead2.googlesyndication.com/pagead/adclick?ai=${Math.random()}`;
-          document.body.appendChild(adClick);
-          setTimeout(() => document.body.removeChild(adClick), 100);
-          
-          navigate("/search");
-        }}
+        onClick={handlePlusClick}
         className="fixed top-4 right-4 z-20 bg-transparent rounded-full backdrop-blur-md bg-white/10 border border-white/20 h-12 w-12"
       >
         <Plus className="h-6 w-6 text-white" />
@@ -169,8 +168,8 @@ const Index = () => {
         )}
 
         {/* Footer banner ad */}
-        <div className="w-full max-w-4xl mt-8">
-          <AdUnit />
+        <div className="w-full max-w-4xl mt-8 sticky bottom-0">
+          <AdUnit slot="3494358496" />
         </div>
       </motion.div>
     </div>
