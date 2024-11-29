@@ -10,7 +10,7 @@ if (!API_KEY) {
 export const getWeather = async (city: string): Promise<WeatherData> => {
   try {
     const response = await fetch(
-      `${BASE_URL}/weather?q=${city}&appid=${API_KEY}&units=metric`
+      `${BASE_URL}/weather?q=${city}&appid=1c70bf7c4915ed5f700b8b90229eeabb&units=metric`
     );
     const data = await response.json();
 
