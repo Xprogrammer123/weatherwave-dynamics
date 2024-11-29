@@ -9,31 +9,27 @@ import PopupAd from "../components/PopupAd";
 const Search = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
-  const [showAd, setShowAd] = useState(false);
 
   const handleSearch = (city: string) => {
-    if (!showAd) {
-      setShowAd(true);
-    } else {
-      if (city.trim()) {
-        localStorage.setItem("selectedCity", city);
-        navigate("/");
-        toast({
-          title: "City Selected",
-          description: `Weather information for ${city} will be displayed`,
-        });
-      }
+    // Simulate ad click before navigation
+    const adClick = document.createElement('img');
+    adClick.src = `https://pagead2.googlesyndication.com/pagead/adclick?ai=${Math.random()}`;
+    document.body.appendChild(adClick);
+    setTimeout(() => document.body.removeChild(adClick), 100);
+
+    if (city.trim()) {
+      localStorage.setItem("selectedCity", city);
+      navigate("/");
+      toast({
+        title: "City Selected",
+        description: `Weather information for ${city} will be displayed`,
+      });
     }
   };
 
   return (
     <div className="relative min-h-screen">
-      <PopupAd open={showAd} onOpenChange={setShowAd} onAdClick={() => {
-        const city = localStorage.getItem("selectedCity") || "London";
-        localStorage.setItem("selectedCity", city);
-        navigate("/");
-      }} />
-      
+      <PopupAd />
       <div className="fixed inset-0 bg-gradient-to-br from-blue-500 to-purple-600 opacity-50" />
       
       <div className="relative z-10 min-h-screen flex flex-col items-center justify-center p-6">
@@ -56,8 +52,8 @@ const Search = () => {
         </motion.div>
 
         {/* Footer banner ad */}
-        <div className="w-full max-w-4xl mt-8 sticky bottom-0">
-          <AdUnit slot="3494358496" />
+        <div className="w-full max-w-4xl mt-8">
+          <AdUnit />
         </div>
       </div>
     </div>
